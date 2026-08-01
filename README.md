@@ -1,59 +1,117 @@
+<p align="center">
+  <img src="banner.png" alt="Quantum Plant Health Classifier Banner" width="100%">
+</p>
+
 # 🌿 Quantum Plant Health Classifier
 
-A **Quantum Machine Learning** web application that classifies plant leaf images as **Healthy** or **Diseased** using a **Variational Quantum Classifier (VQC)** built with **Qiskit**. The application provides an intuitive Flask-based interface for uploading images and receiving real-time predictions with confidence scores.
+<p align="center">
 
-> Developed as an exploration of Quantum Machine Learning (QML) by combining quantum circuits with classical image preprocessing for plant disease detection.
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)
+![Qiskit](https://img.shields.io/badge/Qiskit-6929C4?style=for-the-badge&logo=qiskit&logoColor=white)
+![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)
+![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white)
+![Pillow](https://img.shields.io/badge/Pillow-4B8BBE?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
----
+</p>
 
-## 📸 Demo
+A Quantum Machine Learning web application that classifies plant leaf images as **Healthy** or **Diseased** using a **Variational Quantum Classifier (VQC)** built with **Qiskit**.
 
-> **Live Demo:** *(Add deployment link if available)*
-
-### Screenshots
-
-| Home Page          | Prediction Result  |
-| ------------------ | ------------------ |
-| *(Add Screenshot)* | *(Add Screenshot)* |
-
----
-
-## ✨ Features
-
-* 🌱 Plant leaf disease classification
-* ⚛️ Quantum Machine Learning using Qiskit VQC
-* 📷 Image upload through a Flask web interface
-* 📊 Confidence score for every prediction
-* 🖥️ Clean and responsive user interface
-* 🧠 PCA-based feature reduction before quantum encoding
-* 💾 Pre-trained model loading for faster inference
+The project combines classical image preprocessing with quantum machine learning techniques and provides a Flask-based web interface for real-time plant disease prediction with confidence scores.
 
 ---
 
-## 🛠️ Tech Stack
+# 📖 Project Overview
 
-| Category             | Technologies                    |
-| -------------------- | ------------------------------- |
-| Programming Language | Python                          |
-| Backend              | Flask                           |
-| Quantum Computing    | Qiskit, Qiskit Machine Learning |
-| Machine Learning     | Scikit-learn                    |
-| Image Processing     | Pillow                          |
-| Scientific Computing | NumPy                           |
-| Visualization        | Matplotlib                      |
+Quantum Machine Learning (QML) combines quantum computing principles with machine learning to explore new approaches for solving complex learning problems.
+
+This project applies QML to plant disease classification by integrating image preprocessing, feature reduction using PCA, and a Variational Quantum Classifier (VQC) implemented with Qiskit. The result is an interactive web application capable of classifying plant leaf images as healthy or diseased.
 
 ---
 
-## 📂 Project Structure
+# ✨ Features
+
+- Plant leaf disease classification
+- Quantum Machine Learning using Qiskit
+- Variational Quantum Classifier (VQC)
+- Flask-based web application
+- Image upload interface
+- Confidence score prediction
+- PCA-based feature reduction
+- Pre-trained model loading
+- Responsive user interface
+
+---
+
+# 🛠 Tech Stack
+
+| Category | Technologies |
+|----------|--------------|
+| Programming Language | Python |
+| Backend | Flask |
+| Quantum Computing | Qiskit, Qiskit Machine Learning |
+| Machine Learning | Scikit-learn |
+| Image Processing | Pillow |
+| Scientific Computing | NumPy |
+| Visualization | Matplotlib |
+
+---
+
+# ⚛️ Quantum Machine Learning Workflow
+
+```text
+Plant Leaf Image
+        │
+        ▼
+Image Preprocessing
+        │
+        ▼
+Feature Extraction
+        │
+        ▼
+PCA Dimensionality Reduction
+        │
+        ▼
+Quantum Feature Encoding
+        │
+        ▼
+Variational Quantum Classifier (VQC)
+        │
+        ▼
+Prediction
+        │
+        ▼
+Healthy / Diseased
+```
+
+---
+
+# 🔬 Quantum Pipeline
+
+The classification process consists of:
+
+1. Image preprocessing and normalization
+2. Feature extraction
+3. PCA dimensionality reduction
+4. Quantum feature encoding using **ZZFeatureMap**
+5. Variational Quantum Classifier using **RealAmplitudes**
+6. Optimization using **COBYLA**
+7. Prediction with confidence estimation
+
+---
+
+# 📂 Project Structure
 
 ```text
 AIproject/
 │
-├── app.py                     # Flask application
-├── vqc_model.py               # Quantum classifier implementation
-├── train_model.py             # Model training script
-├── plant_health_model.pkl     # Trained model
+├── app.py
+├── vqc_model.py
+├── train_model.py
+├── plant_health_model.pkl
 ├── requirements.txt
+├── banner.png
 ├── README.md
 │
 ├── templates/
@@ -68,22 +126,29 @@ AIproject/
 
 ---
 
-## ⚙️ Installation
+# 🚀 Getting Started
 
-Clone the repository:
+## Clone the Repository
 
 ```bash
 git clone https://github.com/harshit-s11/AIproject.git
+```
+
+---
+
+## Navigate to the Project
+
+```bash
 cd AIproject
 ```
 
-Create a virtual environment:
+---
+
+## Create a Virtual Environment
 
 ```bash
 python -m venv venv
 ```
-
-Activate it:
 
 ### Windows
 
@@ -91,13 +156,15 @@ Activate it:
 venv\Scripts\activate
 ```
 
-### Linux/macOS
+### Linux / macOS
 
 ```bash
 source venv/bin/activate
 ```
 
-Install dependencies:
+---
+
+## Install Dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -105,9 +172,7 @@ pip install -r requirements.txt
 
 ---
 
-## ▶️ Running the Application
-
-Start the Flask server:
+# ▶️ Run the Application
 
 ```bash
 python app.py
@@ -123,93 +188,74 @@ Upload a plant leaf image and receive a prediction indicating whether the leaf i
 
 ---
 
-## 🧠 Model Workflow
+# 📊 Model Components
 
-```text
-Plant Leaf Image
-        │
-        ▼
- Image Preprocessing
-        │
-        ▼
- Feature Extraction
-        │
-        ▼
- PCA Dimensionality Reduction
-        │
-        ▼
- Quantum Feature Encoding
-        │
-        ▼
- Variational Quantum Circuit (VQC)
-        │
-        ▼
- Prediction
-        │
-        ▼
-Healthy / Diseased
-```
+- Variational Quantum Classifier (VQC)
+- ZZFeatureMap
+- RealAmplitudes Ansatz
+- COBYLA Optimizer
+- PCA Feature Reduction
+- Classical Image Preprocessing
 
 ---
 
-## 🔬 Quantum Machine Learning Pipeline
+# 💼 Applications
 
-The classification process consists of the following stages:
-
-1. Image preprocessing and normalization
-2. Feature reduction using Principal Component Analysis (PCA)
-3. Quantum state encoding using **ZZFeatureMap**
-4. Training a **Variational Quantum Classifier (VQC)** with **RealAmplitudes**
-5. Optimization using the **COBYLA** optimizer
-6. Prediction with confidence estimation
+- Smart Agriculture
+- Plant Disease Detection
+- Precision Farming
+- Quantum Machine Learning Research
+- Computer Vision
+- AI-powered Agricultural Systems
 
 ---
 
-## 📦 Dependencies
+# 🎯 Learning Outcomes
 
-Major libraries used in this project include:
+Through this project, I gained practical experience with:
 
-* Qiskit
-* Qiskit Machine Learning
-* Flask
-* NumPy
-* Scikit-learn
-* Pillow
-* Matplotlib
-
-For the complete list, see:
-
-```text
-requirements.txt
-```
+- Quantum Machine Learning
+- Qiskit
+- Variational Quantum Classifiers
+- Quantum Feature Encoding
+- Flask Development
+- Image Processing
+- PCA Dimensionality Reduction
+- Hybrid Classical-Quantum AI Systems
 
 ---
 
-## 🚀 Future Improvements
+# 🔮 Future Improvements
 
-* Support multiple crop species
-* Multi-class disease classification
-* Deploy on cloud platforms
-* Mobile-friendly interface
-* Improved quantum circuit optimization
-* Explainable AI visualizations
-* Larger training datasets
-* Integration with real quantum hardware
-
----
-
-## 📄 License
-
-This project is intended for educational and research purposes.
+- Multi-class disease classification
+- Additional crop species support
+- Cloud deployment
+- Mobile-responsive interface
+- Explainable AI visualizations
+- Quantum circuit optimization
+- Real quantum hardware integration
+- REST API support
 
 ---
 
-## 👨‍💻 Author
+# 📜 License
+
+This project is licensed for educational and research purposes.
+
+---
+
+# 👨‍💻 Author
 
 **Harshit Sharma**
 
-B.Tech Computer Science Engineering
+Final-year B.Tech Computer Science Engineering Student
 
 VIT Chennai
 
-GitHub: https://github.com/harshit-s11
+🔗 GitHub: https://github.com/harshit-s11
+
+🔗 LinkedIn: https://linkedin.com/in/harshit-sharma24
+
+---
+
+⭐ If you found this repository useful, consider giving it a star.
