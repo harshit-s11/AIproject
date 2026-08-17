@@ -3,174 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plant Health Classifier</title>
+    <title>Quantum Plant Health Classifier</title>
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: #f0f2f5;
+            color: #1a1a1a;
             min-height: 100vh;
-            padding: 20px;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
         }
         
         .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 760px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             overflow: hidden;
+            border: 1px solid #e1e4e8;
         }
         
         header {
-            background: linear-gradient(90deg, #2c3e50 0%, #4a6491 100%);
-            color: white;
-            padding: 30px 20px;
+            background: #1b2838;
+            color: #ffffff;
+            padding: 28px 24px;
             text-align: center;
         }
         
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            font-size: 1.85rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
         }
         
         .subtitle {
-            font-size: 1.1rem;
-            opacity: 0.9;
+            font-size: 0.95rem;
+            color: #b0bec5;
+            line-height: 1.4;
         }
         
         .content {
-            padding: 30px;
+            padding: 28px;
         }
         
         .section {
-            margin-bottom: 30px;
-            padding: 20px;
-            border-radius: 10px;
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
+            margin-bottom: 24px;
+            padding: 18px 20px;
+            border-radius: 8px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
         }
         
         .model-status {
-            background: #e8f5e9;
-            border-left: 4px solid #4caf50;
-            padding: 15px;
-            border-radius: 4px;
-            margin-bottom: 20px;
+            background: #f0fdf4;
+            border-left: 4px solid #16a34a;
         }
         
-        .model-status.fast {
-            background: #e3f2fd;
-            border-left: 4px solid #2196f3;
-        }
-        
-        .model-status.improved {
-            background: #f3e5f5;
-            border-left: 4px solid #9c27b0;
-        }
-        
-        .model-status.old {
-            background: #fff3e0;
-            border-left: 4px solid #ff9800;
+        .model-status.error-status {
+            background: #fef2f2;
+            border-left: 4px solid #dc2626;
         }
         
         h2 {
-            color: #2c3e50;
-            margin-bottom: 15px;
-            font-size: 1.5rem;
+            color: #1e293b;
+            margin-bottom: 12px;
+            font-size: 1.15rem;
+            font-weight: 600;
         }
         
-        .instructions {
-            background: #e3f2fd;
-            border-left: 4px solid #2196f3;
+        .status-details {
+            font-size: 0.9rem;
+            color: #334155;
+            line-height: 1.5;
         }
         
         .instructions ul {
             padding-left: 20px;
-            margin: 15px 0;
-        }
-        
-        .instructions li {
-            margin-bottom: 8px;
+            margin: 8px 0;
+            color: #475569;
+            font-size: 0.92rem;
+            line-height: 1.6;
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
         
         label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: #495057;
+            color: #334155;
+            font-size: 0.95rem;
+        }
+        
+        .file-dropzone {
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+            background: #ffffff;
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+        
+        .file-dropzone:hover {
+            border-color: #3b82f6;
+            background: #f8fafc;
         }
         
         input[type="file"] {
-            width: 100%;
-            padding: 12px;
-            border: 2px dashed #ced4da;
-            border-radius: 8px;
-            background: #fff;
-            transition: all 0.3s;
+            display: none;
         }
         
-        input[type="file"]:hover {
-            border-color: #2196f3;
-            background: #f8f9fa;
+        .file-label-text {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        
+        .file-name-preview {
+            margin-top: 8px;
+            font-weight: 600;
+            color: #0f172a;
+            font-size: 0.9rem;
+        }
+        
+        .preview-container {
+            margin-top: 14px;
+            display: none;
+            text-align: center;
+        }
+        
+        .preview-img {
+            max-width: 180px;
+            max-height: 180px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            object-fit: cover;
         }
         
         button {
-            background: linear-gradient(90deg, #2196f3 0%, #21cbf3 100%);
-            color: white;
+            background: #2563eb;
+            color: #ffffff;
             border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            font-size: 1rem;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
             width: 100%;
-            transition: all 0.3s;
-            box-shadow: 0 4px 6px rgba(33, 150, 243, 0.2);
-            margin-bottom: 10px;
+            transition: background 0.2s, transform 0.1s;
         }
         
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(33, 150, 243, 0.3);
+        button:hover:not(:disabled) {
+            background: #1d4ed8;
+        }
+        
+        button:active:not(:disabled) {
+            transform: scale(0.99);
         }
         
         button:disabled {
-            background: #cccccc;
+            background: #94a3b8;
             cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
         }
         
         .result {
-            padding: 20px;
+            padding: 18px;
             border-radius: 8px;
             text-align: center;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 600;
             margin-top: 20px;
             display: none;
         }
         
         .result.success {
-            background: #e8f5e9;
-            color: #2e7d32;
-            border: 1px solid #a5d6a7;
+            background: #f0fdf4;
+            color: #166534;
+            border: 1px solid #bbf7d0;
         }
         
         .result.error {
-            background: #ffebee;
-            color: #c62828;
-            border: 1px solid #ef9a9a;
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+        
+        .confidence-badge {
+            font-size: 0.88rem;
+            margin-top: 8px;
+            color: #475569;
+            font-weight: 500;
         }
         
         .loading {
@@ -180,186 +214,195 @@
         }
         
         .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-left-color: #2196f3;
+            border: 3px solid #e2e8f0;
+            border-top: 3px solid #2563eb;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
+            width: 32px;
+            height: 32px;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 12px;
         }
         
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
         
-        .confidence {
-            font-size: 0.9rem;
-            margin-top: 5px;
-            color: #666;
-        }
-        
         footer {
             text-align: center;
-            padding: 20px;
-            color: #6c757d;
-            font-size: 0.9rem;
-            border-top: 1px solid #e9ecef;
-        }
-        
-        @media (max-width: 600px) {
-            .container {
-                margin: 10px;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .content {
-                padding: 20px 15px;
-            }
+            padding: 16px;
+            color: #64748b;
+            font-size: 0.85rem;
+            border-top: 1px solid #e2e8f0;
+            background: #f8fafc;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Plant Health Classifier</h1>
-            <p class="subtitle">Using Quantum Machine Learning to detect plant diseases</p>
+            <h1>Quantum Plant Health Classifier</h1>
+            <p class="subtitle">Variational Quantum Classifier (VQC) for Plant Leaf Disease Detection</p>
         </header>
         
         <div class="content">
             <div class="section model-status" id="modelStatus">
-                <h2>Model Status</h2>
-                <p id="modelInfo">Pre-trained quantum model loaded and ready for classification.</p>
+                <h2>Quantum Model Architecture</h2>
+                <div class="status-details" id="modelInfo">
+                    Loading model status...
+                </div>
             </div>
             
             <div class="section instructions">
-                <h2>How It Works</h2>
+                <h2>Workflow</h2>
                 <ul>
-                    <li>The quantum machine learning model has been pre-trained and loaded</li>
-                    <li>Upload an image of a plant leaf (JPG, PNG format)</li>
-                    <li>Click "Classify Image" to analyze the plant's health</li>
-                    <li>Get instant results showing if the plant is Healthy or Diseased</li>
+                    <li>Input image is resized to 32×32 RGB, flattened, and normalized to [0, 1].</li>
+                    <li>PCA reduces feature dimension to 4 principal components.</li>
+                    <li>Features are encoded into 4 qubits via <code>ZZFeatureMap</code> (reps=1, linear).</li>
+                    <li>Classification is executed by <code>VQC</code> with <code>RealAmplitudes</code> ansatz & <code>COBYLA</code>.</li>
                 </ul>
             </div>
             
             <div class="section">
-                <h2>Classify Plant Image</h2>
+                <h2>Leaf Image Classification</h2>
                 <div class="form-group">
-                    <label for="image">Upload Plant Leaf Image:</label>
-                    <input type="file" id="image" name="image" accept="image/*">
+                    <label>Select Plant Leaf Image:</label>
+                    <div class="file-dropzone" id="dropzone">
+                        <span class="file-label-text" id="fileLabelText">Click or drag an image here (JPG, PNG)</span>
+                        <div class="file-name-preview" id="fileNamePreview"></div>
+                        <input type="file" id="imageInput" accept=".jpg,.jpeg,.png,.bmp,.tiff">
+                    </div>
+                    <div class="preview-container" id="previewContainer">
+                        <img id="imagePreview" class="preview-img" alt="Leaf preview">
+                    </div>
                 </div>
+                
                 <div class="form-group">
-                    <button id="classifyButton">Classify Image</button>
+                    <button id="classifyButton" disabled>Select an Image First</button>
                 </div>
+                
                 <div class="loading" id="classifyLoading">
                     <div class="spinner"></div>
-                    <p>Analyzing image with quantum processing...</p>
+                    <p style="font-size: 0.9rem; color: #475569;">Executing quantum circuit simulation & classification...</p>
                 </div>
+                
                 <div class="result" id="classifyResult"></div>
             </div>
         </div>
         
         <footer>
-            <p>Quantum Machine Learning Plant Health Classifier | Powered by Qiskit</p>
+            Quantum Machine Learning Classifier &bull; Qiskit &amp; Flask
         </footer>
     </div>
 
     <script>
-        // Get model type from server
-        function updateModelStatus() {
+        const imageInput = document.getElementById('imageInput');
+        const dropzone = document.getElementById('dropzone');
+        const fileLabelText = document.getElementById('fileLabelText');
+        const fileNamePreview = document.getElementById('fileNamePreview');
+        const previewContainer = document.getElementById('previewContainer');
+        const imagePreview = document.getElementById('imagePreview');
+        const classifyButton = document.getElementById('classifyButton');
+        const loading = document.getElementById('classifyLoading');
+        const result = document.getElementById('classifyResult');
+        const modelStatus = document.getElementById('modelStatus');
+        const modelInfo = document.getElementById('modelInfo');
+
+        // Fetch model architecture info on load
+        function fetchModelInfo() {
             fetch('/model_info')
-            .then(response => response.json())
-            .then(data => {
-                const modelStatus = document.getElementById('modelStatus');
-                const modelInfo = document.getElementById('modelInfo');
-                
-                modelStatus.className = 'section model-status';
-                modelInfo.innerHTML = 'Model loaded successfully';
-            })
-            .catch(error => {
-                console.error('Error fetching model info:', error);
-            });
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'ready') {
+                        modelStatus.className = 'section model-status';
+                        modelInfo.innerHTML = `
+                            <strong>Model:</strong> ${data.model_type} (${data.qubits} Qubits)<br>
+                            <strong>Feature Map:</strong> ${data.feature_map}<br>
+                            <strong>Ansatz:</strong> ${data.ansatz}<br>
+                            <strong>Optimizer:</strong> ${data.optimizer}
+                        `;
+                    } else {
+                        modelStatus.className = 'section model-status error-status';
+                        modelInfo.innerHTML = '<strong>Warning:</strong> Pre-trained model not loaded. Please run <code>python train_model.py</code>.';
+                    }
+                })
+                .catch(err => {
+                    modelStatus.className = 'section model-status error-status';
+                    modelInfo.innerHTML = `<strong>Error fetching model status:</strong> ${err.message}`;
+                });
         }
-        
-        // Handle classification form submission
-        document.getElementById('classifyButton').addEventListener('click', function() {
-            const imageInput = document.getElementById('image');
-            const button = this;
-            const loading = document.getElementById('classifyLoading');
-            const result = document.getElementById('classifyResult');
-            
-            // Check if file is selected
+
+        dropzone.addEventListener('click', () => imageInput.click());
+
+        imageInput.addEventListener('change', function () {
+            if (this.files && this.files[0]) {
+                const file = this.files[0];
+                fileLabelText.style.display = 'none';
+                fileNamePreview.textContent = `Selected: ${file.name}`;
+                
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    imagePreview.src = e.target.result;
+                    previewContainer.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+
+                classifyButton.disabled = false;
+                classifyButton.textContent = 'Classify Leaf Image';
+                result.style.display = 'none';
+            }
+        });
+
+        classifyButton.addEventListener('click', function () {
             if (!imageInput.files || imageInput.files.length === 0) {
-                result.style.display = 'block';
-                result.className = 'result error';
-                result.innerHTML = '<strong>Error:</strong> Please select an image file';
                 return;
             }
-            
-            // Disable button and show loading
-            button.disabled = true;
-            button.textContent = 'Classifying...';
+
+            const file = imageInput.files[0];
+            const formData = new FormData();
+            formData.append('image', file);
+
+            classifyButton.disabled = true;
+            classifyButton.textContent = 'Processing Quantum Circuit...';
             loading.style.display = 'block';
             result.style.display = 'none';
-            
-            // Create FormData object
-            const formData = new FormData();
-            formData.append('image', imageInput.files[0]);
-            
-            // Send request to classify image
+
             fetch('/classify', {
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
+            .then(res => res.json())
             .then(data => {
-                // Hide loading
                 loading.style.display = 'none';
-                
-                // Update button
-                button.disabled = false;
-                button.textContent = 'Classify Image';
-                
-                // Show result
+                classifyButton.disabled = false;
+                classifyButton.textContent = 'Classify Leaf Image';
                 result.style.display = 'block';
+
                 if (data.status === 'success') {
                     result.className = 'result success';
-                    const healthStatus = data.prediction === 'Healthy' ? 
-                        '<span style="color: #4caf50;">✓ Healthy</span>' : 
-                        '<span style="color: #f44336;">⚠ Diseased</span>';
-                    
+                    const isHealthy = data.prediction === 'Healthy';
+                    const labelBadge = isHealthy ? 'Healthy Leaf' : 'Diseased Leaf';
+                    const confPercentage = (data.confidence * 100).toFixed(1);
+
                     result.innerHTML = `
-                        <strong>Classification Result:</strong><br>
-                        Plant is ${healthStatus}<br>
-                        <span class="confidence">Confidence: ${(data.confidence * 100).toFixed(2)}%</span>
+                        <div>Prediction: <strong>${labelBadge}</strong></div>
+                        <div class="confidence-badge">Confidence Score: ${confPercentage}%</div>
                     `;
                 } else {
                     result.className = 'result error';
-                    result.innerHTML = `<strong>Error:</strong> ${data.message}`;
+                    result.innerHTML = `<div><strong>Error:</strong> ${data.message}</div>`;
                 }
             })
-            .catch(error => {
-                // Hide loading
+            .catch(err => {
                 loading.style.display = 'none';
-                
-                // Update button
-                button.disabled = false;
-                button.textContent = 'Classify Image';
-                
-                // Show error
+                classifyButton.disabled = false;
+                classifyButton.textContent = 'Classify Leaf Image';
                 result.style.display = 'block';
                 result.className = 'result error';
-                result.innerHTML = `<strong>Error:</strong> ${error.message}`;
+                result.innerHTML = `<div><strong>Request Error:</strong> ${err.message}</div>`;
             });
         });
-        
-        // Update model status when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            updateModelStatus();
-        });
+
+        document.addEventListener('DOMContentLoaded', fetchModelInfo);
     </script>
 </body>
 </html>
